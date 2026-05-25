@@ -6,7 +6,7 @@
 
 
 size_t	ft_strlen(const char *s);
-
+char	*ft_strcpy(char *dest, const char *src);
 
 /**
  * @brief Create the string set used by the tests.
@@ -66,6 +66,23 @@ void	test_ft_strlen(char **tests, const uint8_t n) {
 	}
 }
 
+
+/**
+ * @brief Compare ft_strcpy results against strcpy.
+ * @param tests Array of strings to test.
+ * @param n Number of strings in the array.
+ */
+void	test_ft_strcpy(char **tests, const uint8_t n) {
+	(void) tests;
+	(void) n;
+
+	char	*src = strdup("Salut");
+	char	*dest = (char *) malloc(sizeof(char) * 6);
+
+	dest = ft_strcpy(dest, src);
+
+	printf("\n\n%s\n\n", dest);
+}
 
 /**
  * @brief Run all libdsm tests.

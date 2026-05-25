@@ -5,7 +5,8 @@ NASM_FLAGS = -f elf64
 CC = cc
 CC_FLAGS = -Wall -Wextra -Werror -g3
 
-SRCS = srcs/ft_strlen.s
+SRCS = srcs/ft_strlen.s \
+	srcs/ft_strcpy.s
 
 TESTS_SRC = tests/main.c
 
