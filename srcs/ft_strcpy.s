@@ -3,18 +3,18 @@ global ft_strcpy
 section .text
 
 ft_strcpy:
-	mov rax, rsi			; Keep dest addr (rsi) in ret addr (rsi)
+	mov rax, rdi			; Keep dest addr (rdi) in ret addr (rsi)
 
 .loop:
-	mov [rdi], [rsi]		; Move character at src (rsi) to dest (rdi)
+	mov dl, byte [rsi]		; Move current src char in tmp 8bits register	; dl = *src
+	mov byte [rdi], dl		; Move tmp char in dst							; *dest = dl
 
-	cmp byte [rsi], 0		; Compare src char to '\0'
-	je .end					; Jump to .end if src char is '\0'
+	cmp dl, 0				; Compare src char to '\0'						; if (dl == '\0')
+	je .end					; Jump to .end if src char is '\0'				; goto .end
 
-	inc rdi					; Increment dest register addr by 1
-	inc rsi					; Increment src register addr by 1
+	inc rdi					; Increment dest register addr by 1				; dest++
+	inc rsi					; Increment src register addr by 1				; src++
+	jmp .loop				; Get back at the beginning of the loop			; goto .loop
 
 .end:
-	ret						; Return dest register addr
-
-
+	ret						; Return dest register addr						; return (rax)

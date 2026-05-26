@@ -62,7 +62,10 @@ void	test_ft_strlen(char **tests, const uint8_t n) {
 		strlen_res = strlen(*(tests + i));
 		ft_strlen_res = ft_strlen(*(tests + i));
 
-		printf("[%d] Original string: %.20s\nstrlen_res:    %zu\nft_strlen_res: %zu\n\n", i, *(tests + i), strlen_res, ft_strlen_res);
+		printf("[%d] Original string    : \"%.10s\"\n", i, *(tests + i));
+		printf("    strlen returned    : %zu\n", strlen_res);
+		printf("    ft_strlen returned : %zu\n", ft_strlen_res);
+		printf("    Result: %s\n\n", (strlen_res == ft_strlen_res) ? "OK" : "KO");
 	}
 }
 
@@ -73,15 +76,38 @@ void	test_ft_strlen(char **tests, const uint8_t n) {
  * @param n Number of strings in the array.
  */
 void	test_ft_strcpy(char **tests, const uint8_t n) {
-	(void) tests;
-	(void) n;
+	char		*src = NULL;
+	char		*strcpy_dest = NULL;
+	char		*ft_strcpy_dest = NULL;
+	char		*ft_strcpy_ret = NULL;
+	size_t		length = 0;
 
-	char	*src = strdup("Salut");
-	char	*dest = (char *) malloc(sizeof(char) * 6);
+	for (uint8_t i = 0 ; i < n ; i++) {
+		src = *(tests + i);
+		length = strlen(src);
 
-	dest = ft_strcpy(dest, src);
+		// Allocate enought memory for both destinations
+		strcpy_dest = (char *) malloc(sizeof(char) * (length + 1) );
+		ft_strcpy_dest = (char *) malloc(sizeof(char) * (length + 1) );
+		if (!strcpy_dest || !ft_strcpy_dest) {
+			write(2, "Heap allocation failed. Aborted\n", 32);
+			exit(1);
+		}
 
-	printf("\n\n%s\n\n", dest);
+		// printf("[%d] \n", i);
+		printf("[%d] src content  : \"%.10s\"\n", i, src);
+
+		// Do the coppiiiieess
+		strcpy(strcpy_dest, *(tests + i));
+		ft_strcpy_ret = ft_strcpy(ft_strcpy_dest, *(tests + i));
+
+		printf("    dest content : \"%.10s\"\n", ft_strcpy_dest);
+		printf("    Same content as original strcpy ? : %s\n", (memcmp(strcpy_dest, ft_strcpy_dest, length + 1) == 0) ? "YES" : "NO");
+		printf("    ft_strcpy_dest addr : %p | ft_strcpy_ret addr : %p | Same addr ? : %s\n\n", ft_strcpy_dest, ft_strcpy_ret, (ft_strcpy_dest == ft_strcpy_ret) ? "YES" : "NO");
+
+		free(strcpy_dest);
+		free(ft_strcpy_dest);
+	}
 }
 
 /**
@@ -94,6 +120,9 @@ int	main(void) {
 
 	printf("    ---- FT_STRLEN ----\n\n");
 	test_ft_strlen(tests, n);
+
+	printf("    ---- FT_STRCPY ----\n\n");
+	test_ft_strcpy(tests, n);
 
 	// Free test strings and test array
 	for (uint8_t i = 0 ; i < n ; i++)
