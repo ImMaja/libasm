@@ -5,6 +5,8 @@
 
 /** xmalloc helper definition */
 void	*xmalloc(const size_t size);
+
+/** title printer definition */
 void	print_test_title(const char *title);
 
 /** tests functions definitions */
