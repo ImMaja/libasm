@@ -27,7 +27,7 @@ static int	test_stdout(const t_write_test *tests, const size_t n)
 	ssize_t	ft_write_res;
 	int		failures = 0;
 
-	printf("    ---- FT_WRITE STDOUT ----\n\n");
+	print_test_title("FT_WRITE STDOUT");
 	for (size_t i = 0; i < n; i++) {
 		printf("[%zu] %s\n", i, tests[i].description);
 		printf("    write output    : \"");
@@ -62,7 +62,7 @@ static int	test_file(const t_write_test *tests, const size_t n,
 		perror("Could not open ft_write output file");
 		exit(EXIT_FAILURE);
 	}
-	printf("    ---- FT_WRITE FILE ----\n\n");
+	print_test_title("FT_WRITE FILE");
 	for (size_t i = 0; i < n; i++) {
 		ft_write_res = ft_write(fd, tests[i].buffer, tests[i].count);
 		printf("[%zu] %s: %zd byte(s) written\n", i, tests[i].description, ft_write_res);
@@ -100,7 +100,7 @@ static int	test_error(void)
 	ft_write_res = ft_write(-1, buffer, 12);
 	ft_write_errno = errno;
 	result_ok = (write_res == ft_write_res && write_errno == ft_write_errno);
-	printf("    ---- FT_WRITE ERROR ----\n\n");
+	print_test_title("FT_WRITE ERROR");
 	printf("    write returned    : %zd | errno: %d\n", write_res, write_errno);
 	printf("    ft_write returned : %zd | errno: %d\n", ft_write_res, ft_write_errno);
 	printf("    Result: %s\n\n", result_ok ? "OK" : "KO");

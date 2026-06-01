@@ -5,11 +5,13 @@
 
 /** xmalloc helper definition */
 void	*xmalloc(const size_t size);
+void	print_test_title(const char *title);
 
 /** tests functions definitions */
 int	test_ft_strlen(void);
 int	test_ft_strcpy(void);
 int	test_ft_strcmp(void);
 int	test_ft_write(void);
+int	test_ft_read(void);
 
 #endif /** TESTS_H */

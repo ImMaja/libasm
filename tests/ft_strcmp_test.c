@@ -67,7 +67,7 @@ int	test_ft_strcmp(void)
 	tests[n - 1].s1 = long_s1;
 	tests[n - 1].s2 = long_s3;
 
-	printf("    ---- FT_STRCMP ----\n\n");
+	print_test_title("FT_STRCMP");
 	for (i = 0; i < n; i++) {
 		strcmp_res = strcmp(tests[i].s1, tests[i].s2);
 		ft_strcmp_res = ft_strcmp(tests[i].s1, tests[i].s2);

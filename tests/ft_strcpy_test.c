@@ -38,7 +38,7 @@ int	test_ft_strcpy(void)
 
 	tests[n - 1] = long_string;
 
-	printf("    ---- FT_STRCPY ----\n\n");
+	print_test_title("FT_STRCPY");
 	for (size_t i = 0; i < n; i++) {
 		length = strlen(tests[i]);
 		strcpy_dest = xmalloc(length + 1);
@@ -50,8 +50,7 @@ int	test_ft_strcpy(void)
 		printf("[%zu] Source string          : \"%.10s\"\n", i, tests[i]);
 		printf("    strcpy destination     : \"%.10s\"\n", strcpy_dest);
 		printf("    ft_strcpy destination  : \"%.10s\"\n", ft_strcpy_dest);
-		printf("    Same content as strcpy : %s\n", content_ok ? "YES" : "NO");
-		printf("    Returned destination   : %s\n\n", return_ok ? "YES" : "NO");
+		printf("    Result: %s\n\n", (content_ok && return_ok) ? "OK" : "KO");
 		if (!content_ok || !return_ok)
 			failures++;
 		free(strcpy_dest);
