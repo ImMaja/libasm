@@ -39,7 +39,8 @@ int	test_ft_strcpy(void)
 	tests[n - 1] = long_string;
 
 	print_test_title("FT_STRCPY");
-	for (size_t i = 0; i < n; i++) {
+	for (size_t i = 0; i < n; i++)
+	{
 		length = strlen(tests[i]);
 		strcpy_dest = xmalloc(length + 1);
 		ft_strcpy_dest = xmalloc(length + 1);
@@ -56,6 +57,7 @@ int	test_ft_strcpy(void)
 		free(strcpy_dest);
 		free(ft_strcpy_dest);
 	}
+
 	free(long_string);
 	return (failures);
 }

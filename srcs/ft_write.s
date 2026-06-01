@@ -17,7 +17,7 @@ ft_write:
 
 .error:
 	neg rax			; Convert negative error code to errno value	; rax = -rax
-	push rax		; Save errno val on stack						; saved_errno = rax
+	push rax		; Save errno val on stack and align memory		; saved_errno = rax
 
 	call __errno_location	; Get errno addr						; rax = __errno_location()
 

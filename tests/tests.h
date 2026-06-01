@@ -15,5 +15,6 @@ int	test_ft_strcpy(void);
 int	test_ft_strcmp(void);
 int	test_ft_write(void);
 int	test_ft_read(void);
+int	test_ft_strdup(void);
 
 #endif /** TESTS_H */

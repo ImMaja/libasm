@@ -29,18 +29,18 @@ static int	have_same_sign(const int first, const int second)
 int	test_ft_strcmp(void)
 {
 	t_strcmp_test	tests[] = {
-		{"equal empty strings", "", ""},
-		{"equal strings", "abc", "abc"},
-		{"different characters", "abc", "abe"},
-		{"different characters, reversed", "abe", "abc"},
-		{"shorter first string", "abc", "abcd"},
-		{"longer first string", "abcd", "abc"},
-		{"empty first string", "", "a"},
-		{"empty second string", "a", ""},
-		{"line break", "Hello World!", "Hello World\n!"},
-		{"unsigned bytes: 0xff > 0x01", "\xff", "\x01"},
-		{"long equal strings", NULL, NULL},
-		{"difference at end of long strings", NULL, NULL}
+		{ "equal empty strings", "", "" },
+		{ "equal strings", "abc", "abc" },
+		{ "different characters", "abc", "abe" },
+		{ "different characters, reversed", "abe", "abc" },
+		{ "shorter first string", "abc", "abcd" },
+		{ "longer first string", "abcd", "abc" },
+		{ "empty first string", "", "a" },
+		{ "empty second string", "a", "" },
+		{ "line break", "Hello World!", "Hello World\n!" },
+		{ "unsigned bytes: 0xff > 0x01", "\xff", "\x01" },
+		{ "long equal strings", NULL, NULL },
+		{ "difference at end of long strings", NULL, NULL }
 	};
 
 	size_t			i = 0;
@@ -68,7 +68,8 @@ int	test_ft_strcmp(void)
 	tests[n - 1].s2 = long_s3;
 
 	print_test_title("FT_STRCMP");
-	for (i = 0; i < n; i++) {
+	for (i = 0; i < n; i++)
+	{
 		strcmp_res = strcmp(tests[i].s1, tests[i].s2);
 		ft_strcmp_res = ft_strcmp(tests[i].s1, tests[i].s2);
 		result_ok = have_same_sign(strcmp_res, ft_strcmp_res);
@@ -98,6 +99,7 @@ int	test_ft_strcmp(void)
 	printf("    gcc strcmp returned : %d\n", strcmp_res);
 	printf("    ft_strcmp returned  : %d\n", ft_strcmp_res);
 	printf("    Result: %s\n\n", result_ok ? "OK" : "KO");
+
 	if (!result_ok)
 		failures++;
 	return (failures);

@@ -35,7 +35,8 @@ int	test_ft_strlen(void)
 	tests[n - 1] = long_string;
 
 	print_test_title("FT_STRLEN");
-	for (size_t i = 0; i < n; i++) {
+	for (size_t i = 0; i < n; i++)
+	{
 		strlen_res = strlen(tests[i]);
 		ft_strlen_res = ft_strlen(tests[i]);
 		printf("[%zu] Original string    : \"%.10s\"\n", i, tests[i]);

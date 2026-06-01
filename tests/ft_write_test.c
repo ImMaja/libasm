@@ -28,7 +28,8 @@ static int	test_stdout(const t_write_test *tests, const size_t n)
 	int		failures = 0;
 
 	print_test_title("FT_WRITE STDOUT");
-	for (size_t i = 0; i < n; i++) {
+	for (size_t i = 0; i < n; i++)
+	{
 		printf("[%zu] %s\n", i, tests[i].description);
 		printf("    write output    : \"");
 		fflush(stdout);
@@ -50,8 +51,7 @@ static int	test_stdout(const t_write_test *tests, const size_t n)
 /**
  * @brief Write test buffers and a long string to a file with ft_write.
  */
-static int	test_file(const t_write_test *tests, const size_t n,
-	const char *long_string)
+static int	test_file(const t_write_test *tests, const size_t n, const char *long_string)
 {
 	int		fd;
 	ssize_t	ft_write_res;
@@ -113,15 +113,16 @@ static int	test_error(void)
  */
 int	test_ft_write(void)
 {
-	static const char	embedded_null[] = {'a', 'b', 'c', '\0', 'd', 'e', 'f'};
+	static const char	embedded_null[] = { 'a', 'b', 'c', '\0', 'd', 'e', 'f' };
 	const t_write_test	tests[] = {
-		{"zero bytes", "", 0},
-		{"single character", "a", 1},
-		{"simple string", "Hello World!", 12},
-		{"line break", "Hello\nWorld!", 12},
-		{"partial buffer", "abcdefghij", 4},
-		{"embedded null byte", embedded_null, sizeof(embedded_null)}
+		{ "zero bytes", "", 0 },
+		{ "single character", "a", 1 },
+		{ "simple string", "Hello World!", 12 },
+		{ "line break", "Hello\nWorld!", 12 },
+		{ "partial buffer", "abcdefghij", 4 },
+		{ "embedded null byte", embedded_null, sizeof(embedded_null) }
 	};
+
 	const size_t		n = sizeof(tests) / sizeof(tests[0]);
 	char			*long_string = xmalloc(LONG_STRING_LENGTH);
 	int				failures;
