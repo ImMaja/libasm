@@ -9,6 +9,7 @@ int	main(void)
 	failures += test_ft_strlen();
 	failures += test_ft_strcpy();
 	failures += test_ft_strcmp();
+	failures += test_ft_write();
 
 	printf("\n%d test(s) failed.\n\n", failures);
 	return (failures != 0);

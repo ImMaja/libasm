@@ -10,5 +10,6 @@ void	*xmalloc(const size_t size);
 int	test_ft_strlen(void);
 int	test_ft_strcpy(void);
 int	test_ft_strcmp(void);
+int	test_ft_write(void);
 
 #endif /** TESTS_H */

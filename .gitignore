@@ -3,3 +3,4 @@ libasm.a
 test
 objs/
 vgcore.*
+tests/ft_write_output.txt
