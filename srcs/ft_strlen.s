@@ -1,3 +1,6 @@
+; ft_strlen
+; size_t strlen(const char *s);
+
 global ft_strlen				; Export ft_strlen
 
 section .text					; Code section
