@@ -101,9 +101,9 @@ static int	test_error(void)
 	ft_write_errno = errno;
 	result_ok = (write_res == ft_write_res && write_errno == ft_write_errno);
 	print_test_title("FT_WRITE ERROR");
-	printf("    write returned    : %zd | errno: %d\n", write_res, write_errno);
-	printf("    ft_write returned : %zd | errno: %d\n", ft_write_res, ft_write_errno);
-	printf("    Result: %s\n\n", result_ok ? "OK" : "KO");
+	printf("write returned    : %zd | errno: %d\n", write_res, write_errno);
+	printf("ft_write returned : %zd | errno: %d\n", ft_write_res, ft_write_errno);
+	printf("Result: %s\n\n", result_ok ? "OK" : "KO");
 	return (!result_ok);
 }
 

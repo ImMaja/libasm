@@ -55,8 +55,8 @@ static int	test_file(const t_read_test *tests, const size_t n)
 				&& (read_res <= 0
 					|| memcmp(read_buffer, ft_read_buffer, read_res) == 0));
 		printf("[%zu] %s\n", i, tests[i].description);
-		printf("    read buffer    : \"%.20s\"\n", read_buffer);
-		printf("    ft_read buffer : \"%.20s\"\n", ft_read_buffer);
+		printf("    read buffer    : \"%.50s\"\n", read_buffer);
+		printf("    ft_read buffer : \"%.50s\"\n", ft_read_buffer);
 		printf("    read returned    : %zd\n", read_res);
 		printf("    ft_read returned : %zd\n", ft_read_res);
 		printf("    Result: %s\n\n", result_ok ? "OK" : "KO");
