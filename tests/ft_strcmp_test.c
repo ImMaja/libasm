@@ -45,17 +45,13 @@ int	test_ft_strcmp(void)
 
 	size_t			i = 0;
 	const size_t	n = sizeof(tests) / sizeof(tests[0]);
-	char			*long_s1;
-	char			*long_s2;
-	char			*long_s3;
+	char			*long_s1 = xmalloc(LONG_STRING_LENGTH + 1);
+	char			*long_s2 = xmalloc(LONG_STRING_LENGTH + 1);
+	char			*long_s3 = xmalloc(LONG_STRING_LENGTH + 1);
 	int				strcmp_res;
 	int				ft_strcmp_res;
 	int				result_ok;
-	int				failures;
-
-	long_s1 = xmalloc(LONG_STRING_LENGTH + 1);
-	long_s2 = xmalloc(LONG_STRING_LENGTH + 1);
-	long_s3 = xmalloc(LONG_STRING_LENGTH + 1);
+	int				failures = 0;
 
 	memset(long_s1, 'a', LONG_STRING_LENGTH);
 	memset(long_s2, 'a', LONG_STRING_LENGTH);
@@ -70,8 +66,6 @@ int	test_ft_strcmp(void)
 	tests[n - 2].s2 = long_s2;
 	tests[n - 1].s1 = long_s1;
 	tests[n - 1].s2 = long_s3;
-
-	failures = 0;
 
 	printf("    ---- FT_STRCMP ----\n\n");
 	for (i = 0; i < n; i++) {
@@ -95,26 +89,16 @@ int	test_ft_strcmp(void)
 	/** Special case, strcmp call optimized by compiler at compile time */
 	printf("[%zu] %s\n", i + 1, "GCC strcmp");
 	printf("    s1: \"%.10s\"\n", "abc");
-	printf("    s2: \"%.10s\"\n", "akb");
+	printf("    s2: \"%.10s\"\n", "abe");
 
 	strcmp_res = strcmp("abc", "abe");
 	ft_strcmp_res = ft_strcmp("abc", "abe");
 	result_ok = have_same_sign(strcmp_res, ft_strcmp_res);
 
-	printf("    strcmp returned    : %d\n", strcmp_res);
-	printf("    ft_strcmp returned : %d\n", ft_strcmp_res);
+	printf("    gcc strcmp returned : %d\n", strcmp_res);
+	printf("    ft_strcmp returned  : %d\n", ft_strcmp_res);
 	printf("    Result: %s\n\n", result_ok ? "OK" : "KO");
 	if (!result_ok)
 		failures++;
 	return (failures);
 }
-
-	// int	(*volatile libc_strcmp)(const char *, const char *) = strcmp;
-// 
-	// printf("    ---- STRCMP LITERAL DEMO ----\n\n");
-	// printf("    GCC strcmp(\"a\", \"k\")  : %d\n", strcmp("a", "k"));
-	// printf("    libc strcmp(\"a\", \"k\") : %d\n", libc_strcmp("a", "k"));
-	// printf("    ft_strcmp(\"a\", \"k\")   : %d\n\n", ft_strcmp("a", "k"));
-	// printf("    GCC strcmp(\"k\", \"a\")  : %d\n", strcmp("k", "a"));
-	// printf("    libc strcmp(\"k\", \"a\") : %d\n", libc_strcmp("k", "a"));
-	// printf("    ft_strcmp(\"k\", \"a\")   : %d\n\n", ft_strcmp("k", "a"));

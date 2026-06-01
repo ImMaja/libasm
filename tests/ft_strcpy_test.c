@@ -24,21 +24,19 @@ int	test_ft_strcpy(void)
 	};
 
 	const size_t	n = sizeof(tests) / sizeof(tests[0]);
-	char			*long_string;
+	char			*long_string = xmalloc(LONG_STRING_LENGTH + 1);
 	char			*strcpy_dest;
 	char			*ft_strcpy_dest;
 	char			*ft_strcpy_ret;
 	size_t			length;
 	int				content_ok;
 	int				return_ok;
-	int				failures;
+	int				failures = 0;
 
-	long_string = xmalloc(LONG_STRING_LENGTH + 1);
 	memset(long_string, 'a', LONG_STRING_LENGTH);
 	long_string[LONG_STRING_LENGTH] = '\0';
 
 	tests[n - 1] = long_string;
-	failures = 0;
 
 	printf("    ---- FT_STRCPY ----\n\n");
 	for (size_t i = 0; i < n; i++) {

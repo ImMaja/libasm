@@ -24,17 +24,15 @@ int	test_ft_strlen(void)
 	};
 
 	const size_t	n = sizeof(tests) / sizeof(tests[0]);
-	char			*long_string;
+	char			*long_string = xmalloc(LONG_STRING_LENGTH + 1);
 	size_t			strlen_res;
 	size_t			ft_strlen_res;
-	int				failures;
+	int				failures = 0;
 
-	long_string = xmalloc(LONG_STRING_LENGTH + 1);
 	memset(long_string, 'a', LONG_STRING_LENGTH);
 	long_string[LONG_STRING_LENGTH] = '\0';
 
 	tests[n - 1] = long_string;
-	failures = 0;
 
 	printf("    ---- FT_STRLEN ----\n\n");
 	for (size_t i = 0; i < n; i++) {
