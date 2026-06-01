@@ -1,5 +1,5 @@
 ; ft_strlen
-; size_t strlen(const char *s);
+; size_t ft_strlen(const char *s);
 
 global ft_strlen				; Export ft_strlen
 

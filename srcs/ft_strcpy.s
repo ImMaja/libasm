@@ -1,5 +1,5 @@
 ; ft_strcpy
-; char *strcpy(char *dest, const char *src);
+; char *ft_strcpy(char *dest, const char *src);
 
 global ft_strcpy
 
