@@ -1,64 +1,126 @@
-; ft_atoi_base
-; int ft_atoi_base(char *str, char *base);
-
 global ft_atoi_base
 
 section .text
 
+; int ft_atoi_base(char *str, char *base)
+;
+; Arguments:
+;   rdi = str
+;   rsi = base
+;
+; Return:
+;   eax = converted value
+;   eax = 0 if an argument is invalid
+;
+; Clobbers:
+;   rax, rcx, rdx
+;
+; Calls:
+;   _check_base
 ft_atoi_base:
-	; not implemented yet
+	push rdi			; Save 'str' and align memory
+	mov rdi, rsi		; Move 'base' in first arg register
 
+	call _check_base	; Check if 'base' string is valid
+
+	pop rdi				; Retrieve 'str' and align memory
+
+	; Check if 'base' is valid
+	cmp eax, -1
+	je .invalid_base
+
+	; 
+
+	; Return converted 'str' in 'base'
+	mov eax, 0;
+	ret
+
+; Return 0 on error
+.invalid_base:
+	mov eax, 0
+	ret
+
+; r12 = str courant
+; r13 = base début
+; r15d = base_len
+; r14d = sign
+; r10d = result
+; ecx = index temporaire dans base
+; al/dl = caractères temporaires
+
+
+; int _check_base(char *base)
+;
+; Arguments:
+;   rdi = base
+;
+; Return:
+;   eax = base length
+;   eax = -1 if base is invalid
+;
+; Clobbers:
+;   rcx, rdx, rdi
 _check_base:
-	test rdi, rdi				; Test if 'base' is not NULL				; if (!base)
-	jz .invalid_base			; Jump to .invalid_base if NULL				; if (!base) goto .invalid_base
+	; Check if 'base' is NULL
+	test rdi, rdi
+	jz .invalid_base
 
-	mov eax, 0					; eax is base length, or -1 if invalid char	; eax = 0
+	; Set 'base' length at 0
+	mov eax, 0
 
 .loop:
-	mov dl, byte [rdi]			; Save current char							; dl = *base
+	mov dl, byte [rdi]	; Save current char
 
-	cmp dl, 0					; Compare dl to '\0'						; dl == '\0'
-	je .end						; Jump to .end if equals					; if (dl == '\0') goto .end
+	; Check if current char is '\0'
+	cmp dl, 0
+	je .end
 
-	cmp dl, 43					; Compare dl to '+'							; dl == '+'
-	je .invalid_base			; Jump to .invalid_base if equals			; if (dl == '+') goto .invalid_base
+	; Check if current char is '+' or '-'
+	cmp dl, '+'
+	je .invalid_base
+	cmp dl, '-'
+	je .invalid_base
 
-	cmp dl, 45					; Compare dl to '-'							; dl == '-'
-	je .invalid_base			; Jump to .invalid_base if equals			; if (dl == '-') goto .invalid_base
-
-	cmp dl, 32					; Compare dl to space						; dl == 32
-	je .invalid_base			; Jump to .invalid_base if dl == 32			; if (dl == 32) goto .invalid_base
-
-	cmp dl, 9					; Compare dl to first whitespace			; dl < 9
-	jb .not_whitespace			; Jump to .not_whitespace if dl < 9			; if (dl < 9) goto .not_whitespace
-
-	cmp dl, 13					; Compare dl to last whitespace				; dl < 13
-	jbe .invalid_base			; Jump to .invalid_base if dl <= 13			; if (dl <= 13) goto .invalid_base
+	; Check if current char is whitespace
+	cmp dl, ' '
+	je .invalid_base
+	cmp dl, 9
+	jb .not_whitespace
+	cmp dl, 13
+	jbe .invalid_base
 
 .not_whitespace:
-	mov ecx, 1					; Set index for innerloop, start at 1 to ignore curr char	; rcx = 1
+	; Innerloop index, start after the
+	; current char to avoid matching itself
+	mov ecx, 1
 
 .dup_loop:
-	cmp byte [rdi + rcx], 0		; Compare innerloop char to '\0'			; rdi[rcx] == '\0'
-	je .dup_loop_end			; Jump to .dup_loop_end if equals			; if (rdi[rcx] == '\0') goto .dup_loop_end
+	; Check if current char is '\0'
+	cmp byte [rdi + rcx], 0
+	je .dup_loop_end
 
-	cmp dl, byte [rdi + rcx]	; Compare outerloop char to innerloop char	; dl == rdi[rcx]
-	je .invalid_base			; Jump to .invalid_base if equals			; if (dl == rdi[rcx]) goto .invalid_base
+	; Check if current char is the same as outerloop char
+	cmp dl, byte [rdi + rcx]
+	je .invalid_base
 
-	inc rcx						; Increment index by 1						; rcx++
-	jmp .dup_loop				; Jump back to the begenning of dup_loop	; goto .dup_loop
+	; Incr index and jump back at the begenning of .dup_loop
+	inc rcx
+	jmp .dup_loop
 
 .dup_loop_end:
-	inc rdi						; Increment base ptr by 1					; base++
-	inc eax						; Increment base length count by 1			; eax++
+	; Inct 'base' ptr and 'base' length
+	; Jump back at the begenning of .loop
+	inc rdi
+	inc eax
 	jmp .loop
 
 .end:
-	cmp eax, 2					; Compare base length to 2					; eax < 2
-	jl .invalid_base			; Jump to .invalid_base if length < 2		; if (eax < 2) goto .invalid_base
-
-	ret							; Otherwise return successfully				; return (eax)
+	; Check is 'base' length is < 2
+	cmp eax, 2
+	jl .invalid_base
+	ret
 
 .invalid_base:
-	mov eax, -1					; Set -1 in return value					; eax = -1
-	ret							; Return error								; return (-1)
+	; Return -1 on invalid 'base'
+	mov eax, -1
+	ret

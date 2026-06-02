@@ -9,6 +9,7 @@
  */
 int	test_ft_atoi_base(void)
 {
-	
+	printf("->%d\n", ft_atoi_base("", "abc"));
+
 	return (0);
 }

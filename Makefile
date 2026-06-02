@@ -3,7 +3,7 @@ NASM = nasm
 NASM_FLAGS = -f elf64
 
 CC = cc
-CC_FLAGS = -Wall -Wextra -Werror
+CC_FLAGS = -Wall -Wextra -Werror -g3
 
 SRC = src/ft_strlen.s \
 	src/ft_strcpy.s \
