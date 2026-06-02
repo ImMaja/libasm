@@ -1,6 +1,7 @@
 en.subject.pdf
 libasm.a
 test
+test_bonus
 objs/
 vgcore.*
 tests/ft_write_output.txt

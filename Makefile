@@ -32,11 +32,12 @@ OBJS_DIR = objs/
 OBJS_BONUS_DIR = $(OBJS_DIR)bonus/
 BONUS_STAMP = $(OBJS_BONUS_DIR).built
 TEST = test
+TEST_BONUS = test_bonus
 
 OBJS = $(SRC:src/%.s=$(OBJS_DIR)%.o)
 OBJS_BONUS = $(SRC_BONUS:bonus/src/%.s=$(OBJS_BONUS_DIR)%.o)
 
-.PHONY: all bonus test clean fclean re
+.PHONY: all bonus test test_bonus clean fclean re
 
 all: $(NAME)
 
@@ -61,11 +62,16 @@ test: $(NAME) $(TESTS_SRC)
 	$(CC) $(CC_FLAGS) $(TESTS_SRC) -L. -lasm -o $(TEST)
 	./$(TEST)
 
+test_bonus: bonus $(TESTS_SRC_BONUS)
+	$(CC) $(CC_FLAGS) $(TESTS_SRC_BONUS) -L. -lasm -o $(TEST_BONUS)
+	./$(TEST_BONUS)
+
 clean:
 	rm -rf $(OBJS_DIR)
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(TEST)
+	rm -f $(TEST_BONUS)
 
 re: fclean all
