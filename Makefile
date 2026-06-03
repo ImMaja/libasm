@@ -25,6 +25,7 @@ TESTS_SRC = tests/ft_strlen_test.c \
 	tests/main.c
 
 TESTS_SRC_BONUS = bonus/tests/ft_atoi_base_test_bonus.c \
+	bonus/tests/helper.c \
 	bonus/tests/main_bonus.c
 
 

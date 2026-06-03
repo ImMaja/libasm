@@ -11,11 +11,6 @@ typedef struct s_atoi_base_test
 	int			expected;
 }	t_atoi_base_test;
 
-static void	print_test_title(const char *title)
-{
-	printf("\033[1;36m    ---- %s ----\033[0m\n\n", title);
-}
-
 static const char	*safe_str(const char *str)
 {
 	if (str == NULL)
