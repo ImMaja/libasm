@@ -16,7 +16,9 @@ section .text
 ;   rdi -> str
 ;   rsi -> base
 ;   r8b -> Temp char
+;   r9b -> Temp char
 ;   edx -> base_length
+;   r10d -> digit_value
 ;   ecx -> sign
 ;   eax -> result
 ;
@@ -82,7 +84,6 @@ ft_atoi_base:
 	jmp .ws_loop
 
 .ws_loop_end:
-
 	; Set default value to sign (by default, it's positive)
 	mov ecx, 1
 
@@ -115,20 +116,47 @@ ft_atoi_base:
 	jmp .signs_loop
 
 .signs_loop_end:
-
 	; Set 0 in result
 	mov eax, 0
 
 ; Loop on each remaining char in 'str' and do the conversion
 .algo_loop:
-	mov r8b, byte [rdi]
+	mov r8b, byte [rdi]	; Current char in 'str'
+	xor r10d, r10d		; Index of this char in 'base'
 
-	
+	; If current char is a '\0' we are done looping and we can return
+	cmp r8b, 0
+	je .return_result
 
+; Iterate on 'base' to found current char position in 'base'
+.search_digit_value:
+	mov r9b, byte [rsi + r10]	; Current char in 'base'
+
+	; If current char in 'base' is '\0', the 'str' char
+	; was not found. We can just return current result
+	cmp r9b, 0
+	je .return_result
+
+	; Compare both chars, if they are the same, we found our digit_value
+	cmp r9b, r8b
+	je .search_digit_value_end
+
+	; Both chars are not equals, continue looping
+	inc r10d
+	jmp .search_digit_value
+
+; We have found our char in 'base'
+; We can add him to result and continue looping
+.search_digit_value_end:
+	imul eax, edx	; result *= base_length
+	add eax, r10d	; result += digit_value
+
+	inc rdi
+	jmp .algo_loop
 
 .algo_loop_end:
-
-	; Signed multiplication result by sign
+; Multiply result with sign and return
+.return_result:
 	imul eax, ecx
 	ret
 
@@ -147,8 +175,11 @@ ft_atoi_base:
 ;   eax = base length
 ;   eax = -1 if base is invalid
 ;
-; Clobbers:
-;   rcx, rdx, rdi
+; Registers:
+;   rdi -> base
+;   dl -> current char in base
+;   ecx -> innerloop index
+;   eax -> base length
 _check_base:
 	; Check if 'base' is NULL
 	test rdi, rdi
