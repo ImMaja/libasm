@@ -5,27 +5,27 @@ section .text
 ; int ft_atoi_base(char *str, char *base)
 ;
 ; Arguments:
-;   rdi = str
-;   rsi = base
+;	rdi = str
+;	rsi = base
 ;
 ; Return:
-;   eax = converted value
-;   eax = 0 if an argument is invalid
+;	eax = converted value
+;	eax = 0 if an argument is invalid
 ;
 ; Registers:
-;   rdi -> str
-;   rsi -> base
-;   r12 -> Save str
-;   r13 -> Save base
-;   r8b -> Temp char
-;   r9b -> Temp char
-;   edx -> base_length
-;   r10d -> digit_value
-;   ecx -> sign
-;   eax -> result
+;	rdi -> str
+;	rsi -> base
+;	r12 -> Save str
+;	r13 -> Save base
+;	r8b -> Temp char
+;	r9b -> Temp char
+;	edx -> base_length
+;	r10d -> digit_value
+;	ecx -> sign
+;	eax -> result
 ;
 ; Calls:
-;   _check_base
+;	_check_base
 ft_atoi_base:
 	; Check if 'str' is not NULL
 	cmp rdi, 0
@@ -170,17 +170,17 @@ ft_atoi_base:
 ; int _check_base(char *base)
 ;
 ; Arguments:
-;   rdi = base
+;	rdi = base
 ;
 ; Return:
-;   eax = base length
-;   eax = -1 if base is invalid
+;	eax = base length
+;	eax = -1 if base is invalid
 ;
 ; Registers:
-;   rdi -> base
-;   dl -> current char in base
-;   ecx -> innerloop index
-;   eax -> base length
+;	rdi -> base
+;	dl -> current char in base
+;	ecx -> innerloop index
+;	eax -> base length
 _check_base:
 	; Check if 'base' is NULL
 	test rdi, rdi
