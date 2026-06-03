@@ -53,9 +53,9 @@ ft_list_push_front:
 	mov rdi, r12
 	mov rsi, r13
 
-	; Retrieve r12 and r13
-	pop r12
+	; Restore callee-saved registers
 	pop r13
+	pop r12
 
 	; Return if malloc failed
 	test rax, rax
@@ -64,8 +64,8 @@ ft_list_push_front:
 	; Set 'data' in newly allocated node
 	mov [rax + T_LIST_DATA], rsi
 
-	; Move *begin_list in rdx and move rdx in rax->next
-	; my_list->next = *begin_list
+	; Set new_node->next to the current first node
+	; new_node->next = *begin_list
 	mov rdx, [rdi]
 	mov [rax + T_LIST_NEXT], rdx
 
