@@ -15,4 +15,4 @@ section .text
 ;   _check_base
 
 ft_list_push_front:
-
+	ret
