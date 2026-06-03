@@ -15,6 +15,8 @@ section .text
 ; Registers:
 ;   rdi -> str
 ;   rsi -> base
+;   r12 -> Save str
+;   r13 -> Save base
 ;   r8b -> Temp char
 ;   r9b -> Temp char
 ;   edx -> base_length
@@ -78,7 +80,7 @@ ft_atoi_base:
 
 	jmp .ws_loop_end
 
-; Increment ptr address, get back at the begenning of the loop
+; Increment ptr address, get back at the beginning of the loop
 .char_is_ws:
 	inc rdi
 	jmp .ws_loop
@@ -110,7 +112,7 @@ ft_atoi_base:
 .invert_sign:
 	neg ecx
 
-; Increment 'str' ptr addr and jump to the begenning of the loop
+; Increment 'str' ptr addr and jump to the beginning of the loop
 .continue_signs_loop:
 	inc rdi
 	jmp .signs_loop
@@ -128,7 +130,7 @@ ft_atoi_base:
 	cmp r8b, 0
 	je .return_result
 
-; Iterate on 'base' to found current char position in 'base'
+; Iterate on 'base' to find current char position in 'base'
 .search_digit_value:
 	mov r9b, byte [rsi + r10]	; Current char in 'base'
 
@@ -154,7 +156,6 @@ ft_atoi_base:
 	inc rdi
 	jmp .algo_loop
 
-.algo_loop_end:
 ; Multiply result with sign and return
 .return_result:
 	imul eax, ecx
@@ -215,7 +216,7 @@ _check_base:
 	mov ecx, 1
 
 .dup_loop:
-	; Check if current char is '\0'
+	; Check if char is '\0'
 	cmp byte [rdi + rcx], 0
 	je .dup_loop_end
 
@@ -223,19 +224,19 @@ _check_base:
 	cmp dl, byte [rdi + rcx]
 	je .invalid_base
 
-	; Incr index and jump back at the begenning of .dup_loop
+	; Incr index and jump back at the beginning of .dup_loop
 	inc rcx
 	jmp .dup_loop
 
 .dup_loop_end:
-	; Inct 'base' ptr and 'base' length
-	; Jump back at the begenning of .loop
+	; Increment 'base' ptr and 'base' length
+	; Jump back at the beginning of .loop
 	inc rdi
 	inc eax
 	jmp .loop
 
 .end:
-	; Check is 'base' length is < 2
+	; Check if 'base' length is < 2
 	cmp eax, 2
 	jl .invalid_base
 	ret
