@@ -55,8 +55,7 @@ int	test_ft_list_size(void)
 		printf("    list             : %p\n", (void *)tests[i].list);
 		printf("    expected         : %d\n", tests[i].expected);
 		printf("    ft_list_size ret : %d\n", ft_list_size_res);
-		printf("    Result: %s\n\n",
-			test_status(ft_list_size_res == tests[i].expected));
+		printf("    Result: %s\n\n", test_status(ft_list_size_res == tests[i].expected));
 		if (ft_list_size_res != tests[i].expected)
 			failures++;
 	}
