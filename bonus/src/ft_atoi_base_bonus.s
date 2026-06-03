@@ -116,7 +116,17 @@ ft_atoi_base:
 
 .signs_loop_end:
 
-	; iciiiiiiiiiiiiiiiiii -----------------
+	; Set 0 in result
+	mov eax, 0
+
+; Loop on each remaining char in 'str' and do the conversion
+.algo_loop:
+	mov r8b, byte [rdi]
+
+	
+
+
+.algo_loop_end:
 
 	; Signed multiplication result by sign
 	imul eax, ecx
