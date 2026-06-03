@@ -23,6 +23,7 @@ section .text
 ;	rsi -> data
 ;	r12 -> Save begin_list
 ;	r13 -> Save data
+;	rdx -> tmp ptr holder
 ;	rax -> new struct ptr
 ;
 ; Calls:
@@ -63,21 +64,16 @@ ft_list_push_front:
 	; Set 'data' in newly allocated node
 	mov [rax + T_LIST_DATA], rsi
 
-	; Set the first node pointed by 'begin_list' in 'next' of new struct
-	; mov [rax + T_LIST_NEXT], [rdi]
-
 	; Move *begin_list in rdx and move rdx in rax->next
+	; my_list->next = *begin_list
 	mov rdx, [rdi]
 	mov [rax + T_LIST_NEXT], rdx
-
 
 	; Set new node ptr in *begin_list
 	mov [rdi], rax
 
-	; Return without value
 	ret
 
-; Return without value
 .return:
 	ret
 
