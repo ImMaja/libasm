@@ -12,41 +12,120 @@ section .text
 ;   eax = converted value
 ;   eax = 0 if an argument is invalid
 ;
-; Clobbers:
-;   rax, rcx, rdx
+; Registers:
+;   rdi -> str
+;   rsi -> base
+;   r8b -> Temp char
+;   edx -> base_length
+;   ecx -> sign
+;   eax -> result
 ;
 ; Calls:
 ;   _check_base
 ft_atoi_base:
-	push rdi			; Save 'str' and align memory
-	mov rdi, rsi		; Move 'base' in first arg register
+	; Check if 'str' is not NULL
+	cmp rdi, 0
+	je .return_error
 
-	call _check_base	; Check if 'base' string is valid
+	; Save callee-saved registers in stack
+	push r12
+	push r13
 
-	pop rdi				; Retrieve 'str' and align memory
+	; Save 'str' and 'base' in safe registers
+	mov r12, rdi
+	mov r13, rsi
+
+	; Move 'base' in first arg register
+	mov rdi, rsi
+
+	; Align stack ptr and check 'base' string
+	sub rsp, 8
+	call _check_base
+	add rsp, 8
+
+	; Restore 'str' and 'base'
+	mov rdi, r12
+	mov rsi, r13
+
+	; Restore callee-saved registers
+	pop r13
+	pop r12
 
 	; Check if 'base' is valid
 	cmp eax, -1
-	je .invalid_base
+	je .return_error
 
-	; 
+	; Save 'base' length in edx
+	mov edx, eax
 
-	; Return converted 'str' in 'base'
-	mov eax, 0;
+; Increment 'str' string ptr to skip whitespaces
+.ws_loop:
+	mov r8b, byte [rdi]
+
+	; Check for '\0' in 'str'
+	cmp r8b, 0
+	je .return_error
+
+	; Check for whitespaces in 'str'
+	cmp r8b, ' '
+	je .char_is_ws
+	cmp r8b, 9
+	jb .ws_loop_end
+	cmp r8b, 13
+	jbe .char_is_ws
+
+	jmp .ws_loop_end
+
+; Increment ptr address, get back at the begenning of the loop
+.char_is_ws:
+	inc rdi
+	jmp .ws_loop
+
+.ws_loop_end:
+
+	; Set default value to sign (by default, it's positive)
+	mov ecx, 1
+
+; Determine result sign, increment 'str' string ptr to skip signs
+; When found a '+', we can just ignore it
+.signs_loop:
+	mov r8b, byte [rdi]
+
+	; Check for '\0' in 'str'
+	cmp r8b, 0
+	je .return_error
+
+	; Check for '+' or '-'
+	cmp r8b, '-'
+	je .invert_sign
+	cmp r8b, '+'
+	je .continue_signs_loop
+
+	; Not a '\0' nor a sign. At this point 'str' is ready to be converted
+	jmp .signs_loop_end
+
+; Invert sign in ecx
+; ex: -1 -> 1 and 1 -> -1
+.invert_sign:
+	neg ecx
+
+; Increment 'str' ptr addr and jump to the begenning of the loop
+.continue_signs_loop:
+	inc rdi
+	jmp .signs_loop
+
+.signs_loop_end:
+
+	; iciiiiiiiiiiiiiiiiii -----------------
+
+	; Signed multiplication result by sign
+	imul eax, ecx
 	ret
 
-; Return 0 on error
-.invalid_base:
+; Return 0
+.return_error:
 	mov eax, 0
 	ret
-
-; r12 = str courant
-; r13 = base début
-; r15d = base_len
-; r14d = sign
-; r10d = result
-; ecx = index temporaire dans base
-; al/dl = caractères temporaires
 
 
 ; int _check_base(char *base)
