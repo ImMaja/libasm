@@ -66,8 +66,7 @@ static int	test_existing_list(size_t index)
 	head_ok = new_node != NULL && new_node != &old_head && new_node != &tail;
 	data_ok = head_ok && new_node->data == data;
 	next_ok = head_ok && new_node->next == &old_head;
-	old_list_ok = old_head.data == old_data && old_head.next == &tail
-		&& tail.data == tail_data && tail.next == NULL;
+	old_list_ok = old_head.data == old_data && old_head.next == &tail && tail.data == tail_data && tail.next == NULL;
 	ok = head_ok && data_ok && next_ok && old_list_ok;
 	printf("[%zu] push before existing list\n", index);
 	print_bool_check("head updated", head_ok);
@@ -97,19 +96,15 @@ static int	test_multiple_pushes(size_t index)
 	first_node = list;
 	ft_list_push_front(&list, second_data);
 	second_node = list;
-	nodes_created = first_node != NULL && second_node != NULL
-		&& first_node != second_node;
+	nodes_created = first_node != NULL && second_node != NULL && first_node != second_node;
 	head_data_ok = nodes_created && second_node->data == second_data;
 	head_next_ok = nodes_created && second_node->next == first_node;
-	first_node_ok = first_node != NULL && first_node->data == first_data
-		&& first_node->next == NULL;
+	first_node_ok = first_node != NULL && first_node->data == first_data && first_node->next == NULL;
 	ok = nodes_created && head_data_ok && head_next_ok && first_node_ok;
 	printf("[%zu] push twice into list\n", index);
 	print_bool_check("nodes created", nodes_created);
-	print_ptr_check("head data", second_data,
-		nodes_created ? second_node->data : NULL);
-	print_ptr_check("head next", first_node,
-		nodes_created ? second_node->next : NULL);
+	print_ptr_check("head data", second_data, nodes_created ? second_node->data : NULL);
+	print_ptr_check("head next", first_node, nodes_created ? second_node->next : NULL);
 	print_bool_check("first node kept", first_node_ok);
 	printf("    Result: %s\n\n", test_status(ok));
 	if (second_node != NULL && second_node != first_node)

@@ -13,7 +13,8 @@ SRC = src/ft_strlen.s \
 	src/ft_strdup.s
 
 SRC_BONUS = bonus/src/ft_atoi_base_bonus.s \
-	bonus/src/ft_list_push_front_bonus.s
+	bonus/src/ft_list_push_front_bonus.s \
+	bonus/src/ft_list_size_bonus.s
 
 TESTS_SRC = tests/ft_strlen_test.c \
 	tests/ft_strcpy_test.c \
@@ -26,6 +27,7 @@ TESTS_SRC = tests/ft_strlen_test.c \
 
 TESTS_SRC_BONUS = bonus/tests/ft_atoi_base_test_bonus.c \
 	bonus/tests/ft_list_push_front_test_bonus.c \
+	bonus/tests/ft_list_size_test_bonus.c \
 	bonus/tests/helper.c \
 	bonus/tests/main_bonus.c
 
