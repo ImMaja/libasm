@@ -6,5 +6,6 @@ void	print_test_title(const char *title);
 
 /** tests functions definitions */
 int	test_ft_atoi_base(void);
+int	test_ft_list_push_front(void);
 
 #endif /** TESTS_BONUS_H */
