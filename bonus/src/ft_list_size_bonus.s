@@ -4,6 +4,7 @@ global ft_list_size
 %define T_LIST_NEXT 8
 
 section .text
+
 ; int ft_list_size(t_list *begin_list);
 ; Arguments:
 ;	rdi = begin_list
