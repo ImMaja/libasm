@@ -8,5 +8,6 @@ void	print_test_title(const char *title);
 int	test_ft_atoi_base(void);
 int	test_ft_list_push_front(void);
 int	test_ft_list_size(void);
+int	test_ft_list_sort(void);
 
 #endif /** TESTS_BONUS_H */
