@@ -14,7 +14,7 @@ SRC = src/ft_strlen.s \
 
 SRC_BONUS = bonus/src/ft_atoi_base_bonus.s \
 	bonus/src/ft_list_push_front_bonus.s \
-	bonus/src/ft_list_size_bonus.s
+	bonus/src/ft_list_size_bonus.s \
 	bonus/src/ft_list_sort_bonus.s
 
 TESTS_SRC = tests/ft_strlen_test.c \

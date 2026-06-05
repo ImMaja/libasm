@@ -21,6 +21,7 @@ section .text
 ;	r15 = current
 ;	rbx = next
 ;	rbp = pos
+;	rdx = temp register
 ft_list_sort:
 	; Check if there is enought nodes to sort the linked-list
 	test rdi, rdi
@@ -43,8 +44,6 @@ ft_list_sort:
 	push rbx
 	push rbp
 
-	; Stack not align at this point
-
 	; Initialize registers with ptrs
 	mov r12, rdi		; begin_list
 	mov r13, rsi		; cmp fct ptr
@@ -56,7 +55,6 @@ ft_list_sort:
 
 ; Iterate through the linked-list, node-by-node
 .lst_loop:
-
 	; Check if current is NULL
 	cmp r15, 0
 	jz .end
@@ -77,10 +75,39 @@ ft_list_sort:
 	cmp eax, 0
 	jle .insert_head
 
-; Insertion loop
-.insert_loop:
+	; pos = sorted
+	mov rbp, r14
 
-	; ici looper sur la liste triee, call cmp pour determiner ou inserer le noeud
+; Loop on sorted list to find where to insert node
+; while (pos->next != NULL && cmp(current->data, pos->next->data) > 0)
+.insertion_loop:
+	; Check if pos->next is NULL
+	cmp qword [rbp + T_LIST_NEXT], 0
+	jz .insertion_loop_end
+
+	; Call cmp function with current->data and pos->next->data
+	mov rdi, [r15 + T_LIST_DATA]
+	mov rdx, [rbp + T_LIST_NEXT]
+	mov rsi, [rdx + T_LIST_DATA]
+	call r13
+
+	; Check if cmp returned <= 0
+	cmp eax, 0
+	jle .insertion_loop_end
+
+	; pos = pos->next
+	mov rbp, [rbp + T_LIST_NEXT]
+
+	jmp .insertion_loop
+
+; Found where to insert current node in sorted list
+.insertion_loop_end:
+	; current->next = pos->next
+	mov rdi, [rbp + T_LIST_NEXT]
+	mov [r15 + T_LIST_NEXT], rdi
+
+	; pos->next = current
+	mov [rbp + T_LIST_NEXT], r15
 
 	; current = next
 	mov r15, rbx
@@ -89,24 +116,10 @@ ft_list_sort:
 	jmp .lst_loop
 
 
-; Insert current node in sorted linked-list
-.insert:
-	; Set pos->next = current
-	mov [rbp + T_LIST_NEXT], r15
-
-	; current->next = NULL
-	mov [r15 + T_LIST_NEXT], 0
-
-	; current = next
-	mov [r15 + T_LIST_NEXT], rbx
-
-	; Jump back in the main loop
-	jmp .lst_loop
-
 ; Insert current in first position of the linked_list
 .insert_head:
 	; current->next = sorted
-	mov [r15 + T_LIST_NEXT] = r14
+	mov [r15 + T_LIST_NEXT], r14
 
 	; sorted = current
 	mov r14, r15
@@ -118,15 +131,26 @@ ft_list_sort:
 	jmp .lst_loop
 
 ; Restore stack memory alignment,
-; retrieve callee-saved registers then return
+; Retrieve callee-saved registers
+; Put first sorted list ptr in *begin_list
 .end:
 	add rsp, 8
+
+	mov rdi, r12
+
+	; rdx = sorted
+	mov rdx, r14
+
 	pop rbp
 	pop rbx
 	pop r15
 	pop r14
 	pop r13
 	pop r12
+
+	; *begin_list = sorted
+	mov [rdi], rdx
+
 	ret
 
 ; Just return
